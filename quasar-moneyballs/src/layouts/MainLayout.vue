@@ -14,7 +14,7 @@
         <q-toolbar-title>
           <div class="absolute-center">
           <q-icon name="account_balance" />
-          Me enacntas Nicole 💕
+          Moneyballs
         </div>
         </q-toolbar-title>
 
