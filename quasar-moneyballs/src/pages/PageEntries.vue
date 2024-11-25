@@ -7,13 +7,14 @@
     >
       <q-item
         v-for="entry in entries"
+        :key="entry.id"
       >
         <q-item-section>
           {{ entry.name }}
         </q-item-section>
 
         <q-item-section side>
-          {{ entry.amount }}
+          {{ currencify(entry.amount) }}
         </q-item-section>
       </q-item>
     </q-list>
@@ -37,24 +38,46 @@ import { ref } from 'vue'
 const entries = ref([
   {
     id: 'id1',
-    name: 'Salary',
-    amount: 4999.99
+    name: 'Cuenta',
+    amount: 6900.00
   },
   {
     id: 'id2',
-    name: 'Rent',
-    amount: -999
+    name: 'Telefono',
+    amount: -625.05
   },
   {
     id: 'id3',
-    name: 'Phone',
-    amount: -14.99
+    name: 'Gastos',
+    amount: -1200.00
   },
   {
     id: 'id4',
-    name: 'Unknown',
-    amount: 0
+    name: 'Otros',
+    amount: -4900.00
   },
 ])
+
+
+/*
+  Currencify
+*/
+
+function currencify(amount) {
+   // Format: "+ $ 4,999.99" "- $ 999.00"
+
+let posNegSymbol = ''
+if (amount > 0) posNegSymbol = '+'
+else if (amount < 0) posNegSymbol = '-'
+
+const currencifySymbol = '$',
+      amountPositive = Math.abs(amount),
+      amountFormatted = amountPositive.toLocaleString('esp-MX', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })
+
+   return `${ posNegSymbol } ${ currencifySymbol } ${ amountFormatted }`
+}
 
 </script>
