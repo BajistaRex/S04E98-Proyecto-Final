@@ -10,12 +10,14 @@
         :key="entry.id"
       >
         <q-item-section
+        class="text-weight-bold"
           :class="useAmountColorClass(entry.amount)"
         >
           {{ entry.name }}
         </q-item-section>
 
         <q-item-section
+        class="text-weight-bold"
         :class="useAmountColorClass(entry.amount)"
           side
         >
@@ -24,6 +26,50 @@
       </q-item>
     </q-list>
   </div>
+
+  <q-footer
+    class="bg-transparent"
+  >
+    <div class="row q-mb-sm q-px-md q-py-sm shadow-up-3">
+      <div class="col text-grey-7 text-h6">
+        Balance:
+      </div>
+      <div
+        :class="useAmountColorClass(balance)"
+        class="col text-h6 text-right"
+      >
+        {{ useCurrencify (balance) }}
+    </div>
+  </div>
+    <div class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
+      <div class="col">
+        <q-input 
+        placeholder="Name"
+        bg-color="white"
+        outlined
+        dense
+        />
+      </div>
+      <div class="col">
+        <q-input 
+        input-class="text-right"
+        placeholder="Amount"
+        bg-color="white"
+        type="number"
+        step="0.01"
+        outlined
+        dense
+        />
+      </div>
+      <div class="col col-auto">
+        <q-btn 
+        color="primary" 
+        icon="add_circle" 
+        round
+        />
+      </div>
+    </div>
+  </q-footer>
   </q-page>
 </template>
 
@@ -33,7 +79,7 @@
   Imports
 */
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useCurrencify } from 'src/use/useCurrencify'
 import { useAmountColorClass } from 'src/use/useAmountColorClass'
 
@@ -63,5 +109,17 @@ const entries = ref([
     amount: -4900.00
   },
 ])
+
+
+
+/*
+  balance
+*/
+
+const balance =  computed(() =>{
+  return entries.value.reduce((accumulator, { amount }) => {
+    return accumulator + amount
+  }, 0)
+})
 
 </script>
